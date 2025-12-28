@@ -1,8 +1,10 @@
 # build artifacts
-build/tmp/
-build/sstate-cache/
-build/cache/
-build/downloads/
+build*/tmp/
+build*/sstate-cache/
+build*/cache/
+build*/downloads/
+
+build*/bitbake.lock
 
 # logs
 *.log
