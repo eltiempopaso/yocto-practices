@@ -7,3 +7,6 @@
 [submodule "meta-ti"]
 	path = meta-ti
 	url = https://git.yoctoproject.org/git/meta-ti
+[submodule "meta-raspberrypi"]
+	path = meta-raspberrypi
+	url = https://git.yoctoproject.org/meta-raspberrypi
