@@ -1,0 +1,12 @@
+# build artifacts
+build/tmp/
+build/sstate-cache/
+build/cache/
+build/downloads/
+
+# logs
+*.log
+
+# editor
+.vscode/
+
