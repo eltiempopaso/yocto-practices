@@ -13,6 +13,7 @@ IMAGE_FEATURES += "ssh-server-dropbear"
 IMAGE_INSTALL += " \
     hello \
     hello-proc \
+    hello-version \
     kernel-modules \
 "
 
