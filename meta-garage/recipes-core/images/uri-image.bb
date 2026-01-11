@@ -16,6 +16,11 @@ IMAGE_INSTALL += " \
     hello-version \
     kernel-modules \
 "
+IMAGE_INSTALL:append = " libgpiod" 
+IMAGE_INSTALL:append = " i2c-tools" 
+IMAGE_INSTALL:append = " libgpiod-tools" 
+IMAGE_INSTALL:append = " dtc" 
+IMAGE_INSTALL:append = " util-linux" 
 
 #IMAGE_INSTALL:append = " \
 #    python3 \
