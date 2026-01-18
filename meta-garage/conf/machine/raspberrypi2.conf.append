@@ -1,0 +1,6 @@
+# Enable I2C and add config.txt entry
+ENABLE_I2C = "1"
+RPI_EXTRA_CONFIG += "dtparam=i2c_arm=on"
+
+# Optional: autoload the kernel modules
+KERNEL_MODULE_AUTOLOAD_rpi += "i2c-dev i2c-bcm2708"
