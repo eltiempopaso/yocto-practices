@@ -21,6 +21,10 @@ IMAGE_INSTALL:append = " i2c-tools"
 IMAGE_INSTALL:append = " libgpiod-tools" 
 IMAGE_INSTALL:append = " dtc" 
 IMAGE_INSTALL:append = " util-linux" 
+IMAGE_INSTALL:append = " python3" 
+IMAGE_INSTALL:append = " python3-pip" 
+IMAGE_INSTALL:append = " python3-kivy" 
+IMAGE_INSTALL:append = " kivy-app-init" 
 
 #IMAGE_INSTALL:append = " \
 #    python3 \

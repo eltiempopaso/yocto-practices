@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Variables necesarias
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/tmp/runtime-root
+mkdir -p $XDG_RUNTIME_DIR
+chmod 0700 $XDG_RUNTIME_DIR
+
+# Lanzar app Kivy
+exec /usr/bin/python3 /usr/bin/hello_kivy.py
+
