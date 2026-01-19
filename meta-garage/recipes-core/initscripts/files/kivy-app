@@ -1,33 +1,58 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          kivy-app
-# Required-Start:    $local_fs
-# Required-Stop:
+# Provides:          hello-kivy
+# Required-Start:    $local_fs $remote_fs $syslog
+# Required-Stop:     $local_fs $remote_fs $syslog
 # Default-Start:     5
-# Default-Stop:
-# Short-Description: Start Kivy app on X11
+# Default-Stop:      0 1 6
+# Short-Description: Start Kivy app on KMS/DRM
 ### END INIT INFO
 
-XINIT=/usr/bin/xinit
-XINITRC=/etc/X11/xinit/xinitrc-kivy
+APP=/usr/bin/hello_kivy.py
+PIDFILE=/run/hello-kivy.pid
+
+start() {
+    echo "Starting hello-kivy"
+
+    export KIVY_WINDOW=sdl2
+    export SDL_VIDEODRIVER=kmsdrm
+    export KIVY_NO_ARGS=1
+    export KIVY_LOG_LEVEL=info
+
+    # Optional but recommended
+    export XDG_RUNTIME_DIR=/run/user/0
+    mkdir -p $XDG_RUNTIME_DIR
+    chmod 0700 $XDG_RUNTIME_DIR
+
+    start-stop-daemon \
+        --start \
+        --background \
+        --make-pidfile \
+        --pidfile $PIDFILE \
+        --exec /usr/bin/python3 \
+        -- $APP
+}
+
+stop() {
+    echo "Stopping hello-kivy"
+    start-stop-daemon --stop --pidfile $PIDFILE
+}
 
 case "$1" in
-  start)
-    echo "Starting Kivy application..."
-    $XINIT $XINITRC -- :0 vt1 &
-    ;;
-  stop)
-    echo "Stopping Kivy application..."
-    killall Xorg python3 || true
-    ;;
-  restart)
-    $0 stop
-    sleep 1
-    $0 start
-    ;;
-  *)
-    echo "Usage: $0 {start|stop|restart}"
-    exit 1
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
 esac
 
 exit 0
