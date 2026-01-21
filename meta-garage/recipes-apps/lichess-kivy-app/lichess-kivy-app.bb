@@ -16,6 +16,8 @@ RDEPENDS:${PN} += "\
     python3-requests \
     python3-berserk \
     python3-ndjson \
+    python3-chess \
+    python3-pyserial \
 "
 
 APPDIR = "/opt/lichess-kivy-app"
