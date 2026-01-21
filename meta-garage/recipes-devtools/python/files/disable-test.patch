@@ -1,0 +1,29 @@
+Index: ndjson-0.3.1/setup.py
+===================================================================
+--- ndjson-0.3.1.orig/setup.py
++++ ndjson-0.3.1/setup.py
+@@ -11,9 +11,9 @@ with open('HISTORY.rst') as history_file
+ 
+ requirements = []
+ 
+-setup_requirements = ['pytest-runner', ]
++#setup_requirements = ['pytest-runner', ]
+ 
+-test_requirements = ['pytest', 'six']
++#test_requirements = ['pytest', 'six']
+ 
+ setup(
+     author="Robert Grant",
+@@ -38,9 +38,9 @@ setup(
+     keywords='ndjson',
+     name='ndjson',
+     packages=find_packages(include=['ndjson']),
+-    setup_requires=setup_requirements,
+-    test_suite='tests',
+-    tests_require=test_requirements,
++#    setup_requires=setup_requirements,
++#    test_suite='tests',
++#    tests_require=test_requirements,
+     url='https://github.com/rhgrant10/ndjson',
+     version='0.3.1',
+     zip_safe=True,

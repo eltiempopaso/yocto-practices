@@ -40,6 +40,8 @@ IMAGE_INSTALL:append = " libsdl2-ttf"
 IMAGE_INSTALL:append = " mesa" 
 #IMAGE_INSTALL:append = " mesa-dri" 
 IMAGE_INSTALL:append = " libgbm" 
+IMAGE_INSTALL:append = " lichess-kivy-app" 
+
 
 #IMAGE_INSTALL:append = " \
 #    python3 \
