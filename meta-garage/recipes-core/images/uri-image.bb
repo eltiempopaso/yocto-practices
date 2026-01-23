@@ -41,6 +41,7 @@ IMAGE_INSTALL:append = " mesa"
 #IMAGE_INSTALL:append = " mesa-dri" 
 IMAGE_INSTALL:append = " libgbm" 
 IMAGE_INSTALL:append = " lichess-kivy-app" 
+IMAGE_INSTALL:append = " stockfish" 
 
 
 #IMAGE_INSTALL:append = " \
