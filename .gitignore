@@ -2,7 +2,8 @@
 build*/tmp/
 build*/sstate-cache/
 build*/cache/
-build*/downloads/
+build*/downloads
+downloads
 
 build*/bitbake.lock
 
