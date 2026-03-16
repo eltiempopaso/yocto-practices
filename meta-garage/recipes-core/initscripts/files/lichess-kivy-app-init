@@ -1,0 +1,28 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          lichess-kivy-app-init
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start lichess-kivy-app at boot time
+# Description:       Enable service provided by lichess-kivy-app
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Starting lichess-kivy-app..."
+    cd /opt/lichess-kivy-app/
+    python3 -m ui.ChessApp &
+    ;;
+  stop)
+    echo "Stopping lichess-kivy-app..."
+    pkill -f "python3 -m ui.ChessApp"
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

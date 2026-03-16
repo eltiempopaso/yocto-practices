@@ -111,3 +111,5 @@ exec /bin/sh
 
 chmod +x init
 find . | cpio -o -H newc | gzip > ../initramfs.cpio.gz
+source poky/oe-init-build-env build-rpi3
+bitbake uri-image

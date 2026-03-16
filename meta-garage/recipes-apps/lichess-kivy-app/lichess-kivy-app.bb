@@ -25,7 +25,7 @@ RDEPENDS:${PN} += "\
 APPDIR = "/opt/lichess-kivy-app"
 
 do_install() {
-    # Copiar TODO el repo tal cual
+    # Copiar el repo tal cual
     install -d ${D}${APPDIR}
     cp -r ${S}/* ${D}${APPDIR}/
 
