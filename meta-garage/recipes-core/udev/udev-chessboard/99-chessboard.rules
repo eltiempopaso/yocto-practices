@@ -1,1 +1,8 @@
+# Custom board
 SUBSYSTEM=="tty", ATTRS{idVendor}=="303a", ATTRS{idProduct}=="1001", SYMLINK+="ttychessboard"
+
+# DGT modernos
+SUBSYSTEM=="tty", ATTRS{idVendor}=="045b", SYMLINK+="ttydgt"
+
+# DGT legacy (más específico)
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{manufacturer}=="DGT", SYMLINK+="ttydgt"
