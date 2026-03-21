@@ -1,0 +1,27 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          fake-hwclock-init
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Restore/save system clock on boot/shutdown
+# Description:       Uses fake-hwclock to maintain time across reboots
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Restoring system clock from fake-hwclock..."
+    fake-hwclock load
+    ;;
+  stop)
+    echo "Saving system clock to fake-hwclock..."
+    fake-hwclock save
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
