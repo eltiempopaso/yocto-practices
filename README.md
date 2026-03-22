@@ -113,3 +113,7 @@ chmod +x init
 find . | cpio -o -H newc | gzip > ../initramfs.cpio.gz
 source poky/oe-init-build-env build-rpi3
 bitbake uri-image
+sudo bmaptool copy tmp/deploy/images/raspberrypi3-64/uri-image-raspberrypi3-64.rootfs.wic.bz2 /dev/sdc
+sudo losetup -Pf image.wic 
+sudo losetup -a 
+sudo mount /dev/loop0p2 /mnt/wic-root/ 

@@ -43,6 +43,12 @@ IMAGE_INSTALL:append = " libgbm"
 IMAGE_INSTALL:append = " lichess-kivy-app" 
 IMAGE_INSTALL:append = " stockfish" 
 IMAGE_INSTALL:append = " python3-asyncdgt" 
+IMAGE_INSTALL:append = " udev-chessboard" 
+IMAGE_INSTALL:append = " u-boot-fw-utils"
+
+IMAGE_INSTALL:append = " fake-hwclock"
+#IMAGE_INSTALL:append = " chrony-utils"
+IMAGE_INSTALL:append = " chrony"
 
 
 #IMAGE_INSTALL:append = " \

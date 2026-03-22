@@ -1,0 +1,22 @@
+#!/bin/sh
+# Simple fake-hwclock implementation for Yocto
+# Stores/restores time to /etc/fake-hwclock.data
+
+DATAFILE=/etc/fake-hwclock.data
+
+case "$1" in
+  save)
+    date +%s > "$DATAFILE"
+    ;;
+  load)
+    if [ -f "$DATAFILE" ]; then
+      date -s "@$(cat $DATAFILE)"
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {save|load}"
+    exit 1
+    ;;
+esac
+
+exit 0
