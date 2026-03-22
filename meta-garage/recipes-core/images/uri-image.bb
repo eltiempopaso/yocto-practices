@@ -49,6 +49,8 @@ IMAGE_INSTALL:append = " u-boot-fw-utils"
 IMAGE_INSTALL:append = " fake-hwclock"
 #IMAGE_INSTALL:append = " chrony-utils"
 IMAGE_INSTALL:append = " chrony"
+IMAGE_INSTALL:append = " rsync"
+IMAGE_INSTALL:append = " procps"
 
 
 #IMAGE_INSTALL:append = " \

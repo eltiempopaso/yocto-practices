@@ -20,6 +20,7 @@ RDEPENDS:${PN} += "\
     python3-pyserial \
     python3-pyperclip \
     python3-opencv \
+    bash \
 "
 
 APPDIR = "/opt/lichess-kivy-app"
