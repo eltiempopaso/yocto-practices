@@ -51,6 +51,8 @@ IMAGE_INSTALL:append = " fake-hwclock"
 IMAGE_INSTALL:append = " chrony"
 IMAGE_INSTALL:append = " rsync"
 IMAGE_INSTALL:append = " procps"
+IMAGE_INSTALL:append = " rootfs-switch"
+IMAGE_INSTALL:append = " xclip xsel"
 
 
 #IMAGE_INSTALL:append = " \
