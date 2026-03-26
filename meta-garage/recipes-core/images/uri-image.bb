@@ -59,6 +59,7 @@ IMAGE_INSTALL:append = " \
     gstreamer1.0-plugins-good \
     gstreamer1.0-plugins-bad \
 "
+IMAGE_INSTALL:append = " data-mount"
 
 
 #IMAGE_INSTALL:append = " \
