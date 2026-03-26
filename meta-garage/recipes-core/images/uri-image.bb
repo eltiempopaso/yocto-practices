@@ -52,7 +52,13 @@ IMAGE_INSTALL:append = " chrony"
 IMAGE_INSTALL:append = " rsync"
 IMAGE_INSTALL:append = " procps"
 IMAGE_INSTALL:append = " rootfs-switch"
-IMAGE_INSTALL:append = " xclip xsel"
+#IMAGE_INSTALL:append = " ffmpeg"
+IMAGE_INSTALL:append = " \
+    gstreamer1.0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+"
 
 
 #IMAGE_INSTALL:append = " \
@@ -78,4 +84,7 @@ IMAGE_INSTALL:append = " xclip xsel"
 
 # Optional but very common
 IMAGE_LINGUAS = "en-us"
+
+WKS_FILE  = "sdimage-ab.wks"
+WKS_FILES = "sdimage-ab.wks"
 
