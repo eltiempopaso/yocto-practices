@@ -15,6 +15,7 @@ IMAGE_INSTALL += " \
     hello-proc \
     hello-version \
     kernel-modules \
+    kernel-module-nunchuk \
 "
 IMAGE_INSTALL:append = " libgpiod" 
 IMAGE_INSTALL:append = " i2c-tools" 
@@ -88,4 +89,6 @@ IMAGE_LINGUAS = "en-us"
 
 WKS_FILE  = "sdimage-ab.wks"
 WKS_FILES = "sdimage-ab.wks"
+
+#KERNEL_MODULE_AUTOlOAD:append = " nunchuk"
 
