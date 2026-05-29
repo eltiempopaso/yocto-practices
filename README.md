@@ -117,3 +117,11 @@ sudo bmaptool copy tmp/deploy/images/raspberrypi3-64/uri-image-raspberrypi3-64.r
 sudo losetup -Pf image.wic 
 sudo losetup -a 
 sudo mount /dev/loop0p2 /mnt/wic-root/ 
+
+
+
+Flashear toda sd:
+rootfs-switch nfs
+reboot
+
+bzcat tmp/deploy/images/raspberrypi3-64/uri-image-raspberrypi3-64.rootfs.wic.bz2 | ssh root@192.168.0.100 "dd of=/dev/mmcblk0 bs=4M"

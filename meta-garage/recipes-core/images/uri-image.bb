@@ -91,4 +91,5 @@ WKS_FILE  = "sdimage-ab.wks"
 WKS_FILES = "sdimage-ab.wks"
 
 #KERNEL_MODULE_AUTOlOAD:append = " nunchuk"
+#RPI_EXTRA_CONFIG:append = "\ndtoverlay=nunchuk"
 
