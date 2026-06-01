@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+
+$id: "http://devicetree.org/schemas/input/nintendo,nunchuk.yaml#"
+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+
+title: Nintendo Nunchuk I2C Controller
+
+maintainers:
+  - Oriol Parera
+
+properties:
+  compatible:
+    const: nintendo,nunchuk
+
+  reg:
+    description: I2C address of the device
+    maxItems: 1
+
+  variant:
+    description: Hardware variant of the Nunchuk
+    enum:
+      - white
+      - black
+
+required:
+  - compatible
+  - reg
+
+additionalProperties: false

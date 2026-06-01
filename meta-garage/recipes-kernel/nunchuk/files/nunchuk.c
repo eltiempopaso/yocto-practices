@@ -9,7 +9,7 @@ static const struct i2c_device_id nunchuk_id[] = {
 MODULE_DEVICE_TABLE(i2c, nunchuk_id);
 
 static const struct of_device_id nunchuk_of_match[] = {
-    { .compatible = "my,nunchuk" },
+    { .compatible = "nintendo,nunchuk" },
     { }
 };
 MODULE_DEVICE_TABLE(of, nunchuk_of_match);
