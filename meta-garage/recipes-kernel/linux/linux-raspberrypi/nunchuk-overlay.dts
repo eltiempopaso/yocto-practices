@@ -1,0 +1,14 @@
+/dts-v1/;
+/plugin/;
+
+&{/soc/i2c@7e804000} {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    nunchuk: nunchuk@52 {
+        compatible = "nintendo,nunchuk";
+        reg = <0x52>;
+
+        variant = "white";
+    };
+};
