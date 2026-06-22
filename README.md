@@ -137,13 +137,14 @@ https://bootlin.com/labs/doc/nunchuk.pdf
 
 
 -------
-devtool modify kernel-module-nunchuk
+devtool modify nunchuk
 
 #editar aqui.c
-workspace/sources/kernel-module-nunchuk/
+workspace/sources/nunchuk/
+/local/work/repos/yocto-practices/build-rpi3/workspace/sources/nunchuk
 
-devtool build kernel-module-nunchuk
+devtool build nunchuk
 
-devtool deploy-target kernel-module-nunchuk root@target
+devtool deploy-target nunchuk root@192.168.0.100
 
-devtool reset kernel-module-nunchuk
+devtool reset nunchuk
