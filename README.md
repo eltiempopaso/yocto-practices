@@ -125,3 +125,25 @@ rootfs-switch nfs
 reboot
 
 bzcat tmp/deploy/images/raspberrypi3-64/uri-image-raspberrypi3-64.rootfs.wic.bz2 | ssh root@192.168.0.100 "dd of=/dev/mmcblk0 bs=4M"
+
+
+--------
+bunzip2 -c tmp/deploy/images/raspberrypi3-64/uri-image-raspberrypi3-64.rootfs.wic.bz2 > image2.wic
+wic ls build-rpi3/image2.wic:1/overlays 
+
+
+
+https://bootlin.com/labs/doc/nunchuk.pdf
+
+
+-------
+devtool modify kernel-module-nunchuk
+
+#editar aqui.c
+workspace/sources/kernel-module-nunchuk/
+
+devtool build kernel-module-nunchuk
+
+devtool deploy-target kernel-module-nunchuk root@target
+
+devtool reset kernel-module-nunchuk
