@@ -17,6 +17,7 @@ IMAGE_INSTALL += " \
     kernel-modules \
     kernel-module-nunchuk \
 "
+IMAGE_INSTALL:append = " evtest" 
 IMAGE_INSTALL:append = " libgpiod" 
 IMAGE_INSTALL:append = " i2c-tools" 
 IMAGE_INSTALL:append = " libgpiod-tools" 

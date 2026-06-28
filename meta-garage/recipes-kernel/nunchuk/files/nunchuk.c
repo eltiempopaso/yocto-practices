@@ -86,7 +86,7 @@ static void nunchuk_poll(struct input_dev *input) {
     input_report_key(input, BTN_Z, zpressed);
     input_report_key(input, BTN_C, cpressed);
     input_sync(input);
-    pr_info("poll nunchuk: zpressed=%d cpressed=%d\n", zpressed, cpressed);
+//    pr_info("poll nunchuk: zpressed=%d cpressed=%d\n", zpressed, cpressed);
 }
 
 /////////////////////////////////////
@@ -123,10 +123,7 @@ static int nunchuk_probe(struct i2c_client *client) {
 	goto fail;
     }
 
-    //input_set_poll_interval(input, 5000);
-    //input_set_min_poll_interval(input, 5000);
-    //input_set_max_poll_interval(input, 5000);
-    const unsigned int poll_interval = 500; // TODO: move this config to devtree. also reduce to 50ms, now its 5s
+    const unsigned int poll_interval = 50; // TODO: move this config to devtree
     input_set_poll_interval(input, poll_interval);
 
     /* register input poll device */
