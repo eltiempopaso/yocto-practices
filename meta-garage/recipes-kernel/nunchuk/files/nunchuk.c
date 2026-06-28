@@ -123,11 +123,11 @@ static int nunchuk_probe(struct i2c_client *client) {
 	goto fail;
     }
 
-    input_set_poll_interval(input, 5000);
-    input_set_min_poll_interval(input, 5000);
-    input_set_max_poll_interval(input, 5000);
-    //const unsigned int poll_interval = 100; // TODO: move this config to devtree. also reduce to 50ms, now its 5s
-    //input_set_poll_interval(input, poll_interval);
+    //input_set_poll_interval(input, 5000);
+    //input_set_min_poll_interval(input, 5000);
+    //input_set_max_poll_interval(input, 5000);
+    const unsigned int poll_interval = 500; // TODO: move this config to devtree. also reduce to 50ms, now its 5s
+    input_set_poll_interval(input, poll_interval);
 
     /* register input poll device */
     status = input_register_device(input);
