@@ -80,9 +80,9 @@ static int nunchuk_read_registers(struct i2c_client *client, struct nunchuk_regi
 	regs->joyx = buf[0];
 	regs->joyy = buf[1];
 
-	regs->accelx = (data[2] << 2) | ((data[5] >> 2) & 0x03); 
-	regs->accely = (data[3] << 2) | ((data[5] >> 4) & 0x03);
-	regs->accelz = (data[4] << 2) | ((data[5] >> 6) & 0x03);
+	regs->accelx = (buf[2] << 2) | ((buf[5] >> 2) & 0x03); 
+	regs->accely = (buf[3] << 2) | ((buf[5] >> 4) & 0x03);
+	regs->accelz = (buf[4] << 2) | ((buf[5] >> 6) & 0x03);
 
 	return 0;
 }
