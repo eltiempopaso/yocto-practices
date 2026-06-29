@@ -9,6 +9,9 @@ struct nunchuk_registers {
     u8 zpressed;
     u8 joyx;
     u8 joyy;
+    u16 accelx;
+    u16 accely;
+    u16 accelz;
 };
 
 struct nunchuk_dev {
@@ -77,6 +80,10 @@ static int nunchuk_read_registers(struct i2c_client *client, struct nunchuk_regi
 	regs->joyx = buf[0];
 	regs->joyy = buf[1];
 
+	regs->accelx = (data[2] << 2) | ((data[5] >> 2) & 0x03); 
+	regs->accely = (data[3] << 2) | ((data[5] >> 4) & 0x03);
+	regs->accelz = (data[4] << 2) | ((data[5] >> 6) & 0x03);
+
 	return 0;
 }
 
@@ -127,6 +134,9 @@ static int nunchuk_probe(struct i2c_client *client) {
     set_bit(ABS_Y, input->absbit);
     input_set_abs_params(input, ABS_X, 30, 220, 4, 8);
     input_set_abs_params(input, ABS_Y, 40, 200, 4, 8);
+
+    //accelerometer
+    //TODO: Accelerometer needs a second input device?
 
     //Classic buttons
     set_bit(BTN_TL, input->keybit);
