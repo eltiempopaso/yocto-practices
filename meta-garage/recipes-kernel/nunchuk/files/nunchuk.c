@@ -4,6 +4,13 @@
 #include <linux/delay.h>
 #include <linux/input.h>
 
+struct nunchuk_registers {
+    u8 cpressed;
+    u8 zpressed;
+    u8 joyx;
+    u8 joyy;
+};
+
 struct nunchuk_dev {
     struct i2c_client *i2c_client;
 };
@@ -48,7 +55,7 @@ static int initialize_unencrypted_nunchuk(struct i2c_client *client) {
         return status;
 }
 
-static int nunchuk_read_registers(struct i2c_client *client, int * zpressed, int * cpressed) {
+static int nunchuk_read_registers(struct i2c_client *client, struct nunchuk_registers *regs) {
         int status;
 	u8 req[]   = { 0x00 };
 	u8 buf[6];
@@ -64,27 +71,33 @@ static int nunchuk_read_registers(struct i2c_client *client, int * zpressed, int
 		return status < 0 ? status : -EIO;
 	}
 
-	*zpressed = (buf[5] & 0x01)? 0 : 1;
-	*cpressed = (buf[5] & 0x02)? 0 : 1;
+	regs->zpressed = (buf[5] & 0x01)? 0 : 1;
+	regs->cpressed = (buf[5] & 0x02)? 0 : 1;
+
+	regs->joyx = buf[0];
+	regs->joyy = buf[1];
 
 	return 0;
 }
 
 static void nunchuk_poll(struct input_dev *input) {
     int status;
-    int zpressed, cpressed;
+    struct nunchuk_registers *regs;
     struct nunchuk_dev *nunchuk = input_get_drvdata(input);
     struct i2c_client *client = nunchuk->i2c_client;
 
-    status = nunchuk_read_registers(client, &zpressed, &cpressed);
+    status = nunchuk_read_registers(client, regs);
 
     if (status < 0) {
         dev_dbg(&client->dev, "poll error %d for '%s'\n", status, client->name);
 	return;
     }
 
-    input_report_key(input, BTN_Z, zpressed);
-    input_report_key(input, BTN_C, cpressed);
+    input_report_key(input, BTN_Z, regs->zpressed);
+    input_report_key(input, BTN_C, regs->cpressed);
+
+    input_report_abs(input, ABS_X, regs->joyx);
+    input_report_abs(input, ABS_Y, regs->joyy);
     input_sync(input);
 //    pr_info("poll nunchuk: zpressed=%d cpressed=%d\n", zpressed, cpressed);
 }
@@ -108,6 +121,25 @@ static int nunchuk_probe(struct i2c_client *client) {
     set_bit(EV_KEY, input->evbit);
     set_bit(BTN_C, input->keybit);
     set_bit(BTN_Z, input->keybit);
+
+    //joystick
+    set_bit(ABS_X, input->absbit);
+    set_bit(ABS_Y, input->absbit);
+    input_set_abs_params(input, ABS_X, 30, 220, 4, 8);
+    input_set_abs_params(input, ABS_Y, 40, 200, 4, 8);
+
+    //Classic buttons
+    set_bit(BTN_TL, input->keybit);
+    set_bit(BTN_SELECT, input->keybit);
+    set_bit(BTN_MODE, input->keybit);
+    set_bit(BTN_START, input->keybit);
+    set_bit(BTN_TR, input->keybit);
+    set_bit(BTN_TL2, input->keybit);
+    set_bit(BTN_B, input->keybit);
+    set_bit(BTN_Y, input->keybit);
+    set_bit(BTN_A, input->keybit);
+    set_bit(BTN_X, input->keybit);
+    set_bit(BTN_TR2, input->keybit);
 
     nunchuk = devm_kzalloc(&client->dev, sizeof(*nunchuk), GFP_KERNEL);
     if (!nunchuk) {
@@ -139,6 +171,7 @@ static int nunchuk_probe(struct i2c_client *client) {
     if (status < 0)
 	    goto fail;
 
+    pr_info("nunchuk device successfully probed\n");
     return 0;
 
 fail:
