@@ -3,19 +3,9 @@
 
 #include <dt-bindings/gpio/gpio.h>
 
-&{/soc/i2c@7e804000} {
-    #address-cells = <1>;
-    #size-cells = <0>;
-
-    nunchuk: nunchuk@52 {
-        compatible = "nintendo,nunchuk";
-        reg = <0x52>;
-
-        variant = "white";
-    };
-};
-
 / {
+    compatible = "brcm,bcm2837";
+
     push_button {
         compatible = "garage,my-push-button";
 

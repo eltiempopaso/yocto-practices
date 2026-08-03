@@ -16,6 +16,7 @@ IMAGE_INSTALL += " \
     hello-version \
     kernel-modules \
     kernel-module-nunchuk \
+    kernel-module-my-push-button \
 "
 IMAGE_INSTALL:append = " evtest" 
 IMAGE_INSTALL:append = " ninvaders" 
