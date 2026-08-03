@@ -38,9 +38,11 @@ static int push_button_probe(struct platform_device *pdev)
     return 0;
 }
 
-static void push_button_remove(struct platform_device *pdev)
+static int push_button_remove(struct platform_device *pdev)
 {
     dev_info(&pdev->dev, "Push button removed\n");
+
+    return 0;
 }
 
 static const struct of_device_id push_button_of_match[] = {
