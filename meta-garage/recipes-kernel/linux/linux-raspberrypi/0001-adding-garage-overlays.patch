@@ -1,0 +1,58 @@
+From 36f146f0da54c1a7c6c77942d4d0d0519978d27f Mon Sep 17 00:00:00 2001
+From: Oriol Parera <oriol.parera.kernel@gmail.com>
+Date: Tue, 4 Aug 2026 22:03:15 +0200
+Subject: [PATCH] adding garage overlays
+
+---
+ arch/arm/boot/dts/overlays/Makefile           |  1 +
+ .../arm/boot/dts/overlays/nunchuk-overlay.dts | 26 +++++++++++++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 arch/arm/boot/dts/overlays/nunchuk-overlay.dts
+
+diff --git a/arch/arm/boot/dts/overlays/Makefile b/arch/arm/boot/dts/overlays/Makefile
+index 367cbf437e1b..815e47e1cf4e 100644
+--- a/arch/arm/boot/dts/overlays/Makefile
++++ b/arch/arm/boot/dts/overlays/Makefile
+@@ -185,6 +185,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
+ 	mlx90640.dtbo \
+ 	mmc.dtbo \
+ 	mz61581.dtbo \
++	nunchuk.dtbo \
+ 	ov2311.dtbo \
+ 	ov5647.dtbo \
+ 	ov64a40.dtbo \
+diff --git a/arch/arm/boot/dts/overlays/nunchuk-overlay.dts b/arch/arm/boot/dts/overlays/nunchuk-overlay.dts
+new file mode 100644
+index 000000000000..a6f9a77f4136
+--- /dev/null
++++ b/arch/arm/boot/dts/overlays/nunchuk-overlay.dts
+@@ -0,0 +1,26 @@
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++
++&{/soc/i2c@7e804000} {
++    #address-cells = <1>;
++    #size-cells = <0>;
++
++    nunchuk: nunchuk@52 {
++        compatible = "nintendo,nunchuk";
++        reg = <0x52>;
++
++        variant = "white";
++    };
++};
++
++/ {
++    push_button {
++        compatible = "garage,my-push-button";
++
++        button-gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
++
++        status = "okay";
++    };
++};
+-- 
+2.39.5
+

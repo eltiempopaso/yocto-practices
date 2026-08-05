@@ -1,8 +1,6 @@
 /dts-v1/;
 /plugin/;
 
-#include <dt-bindings/gpio/gpio.h>
-
 &{/soc/i2c@7e804000} {
     #address-cells = <1>;
     #size-cells = <0>;
@@ -15,12 +13,36 @@
     };
 };
 
+
 / {
-    push_button {
-        compatible = "garage,my-push-button";
+    compatible = "brcm,bcm2837";
 
-        button-gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
+    fragment@0 {
+        target = <&gpio>;
 
-        status = "okay";
+        __overlay__ {
+            button_pins: button_pins@27 {
+                brcm,pins = <27>;
+                brcm,function = <0>; /* input */
+                brcm,pull = <2>;     /* pull-up */
+            };
+        };
+    };
+
+    fragment@1 {
+        target-path = "/";
+
+        __overlay__ {
+            push_button: push_button@0 {
+                compatible = "garage,my-push-button";
+
+                pinctrl-names = "default";
+                pinctrl-0 = <&button_pins>;
+
+                button-gpios = <&gpio 27 1>;
+
+                status = "okay";
+            };
+        };
     };
 };

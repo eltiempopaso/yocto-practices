@@ -3,11 +3,12 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/linux-raspberrypi:"
 
 SRC_URI += " \
     file://garage.cfg \
-    file://0001-adding-nunchuk-overlay.patch \
+    file://0001-adding-garage-overlays.patch \
 "
 #SRC_URI += " \
 #    file://garage.cfg \
 #    file://nunchuk-overlay.dts;subdir=git/arch/${ARCH}/boot/dts/overlays \
+#    file://0001-adding-nunchuk-overlay.patch \
 #"
 
 KERNEL_DEVICETREE:append = " overlays/nunchuk.dtbo"
