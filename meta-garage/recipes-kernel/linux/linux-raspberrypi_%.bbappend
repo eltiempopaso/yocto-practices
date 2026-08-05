@@ -3,7 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/linux-raspberrypi:"
 
 SRC_URI += " \
     file://garage.cfg \
-    file://0001-adding-garage-overlays.patch \
+    file://0001-nunchuk-and-push-butoon-overlay.patch \
 "
 #SRC_URI += " \
 #    file://garage.cfg \
