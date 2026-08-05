@@ -2,19 +2,35 @@
 #include <linux/platform_device.h>
 #include <linux/gpio/consumer.h>
 #include <linux/of.h>
+#include <linux/interrupt.h>
+#include <linux/gpio.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Oriol Parera");
 MODULE_DESCRIPTION("Simple Push Button Driver");
 
 struct push_button {
+    struct platform_device *pdev;
     struct gpio_desc *button;
+    int irq;
 };
+
+
+static irqreturn_t push_button_irq(int irq, void *data)
+{
+    struct push_button *pb = data;
+
+    dev_info(&pb->pdev->dev, "Button pressed\n");
+
+    return IRQ_HANDLED;
+}
+
 
 static int push_button_probe(struct platform_device *pdev)
 {
     struct push_button *pb;
-    int value;
+    int err;
+    //int value;
 
     pb = devm_kzalloc(&pdev->dev, sizeof(*pb), GFP_KERNEL);
     if (!pb)
@@ -24,14 +40,52 @@ static int push_button_probe(struct platform_device *pdev)
      * Reads "button-gpios" from the Device Tree.
      */
     pb->button = devm_gpiod_get(&pdev->dev, "button", GPIOD_IN);
-    if (IS_ERR(pb->button))
+    if (IS_ERR(pb->button)) {
+        dev_err(&pdev->dev, "devm_gpiod_get failed: %ld\n", PTR_ERR(pb->button));
         return PTR_ERR(pb->button);
+    }
+
+    pb->pdev = pdev;
+
+    /*
 
     value = gpiod_get_value(pb->button);
 
-    dev_info(&pdev->dev,
-             "Push button initialized. Current value = %d\n",
-             value);
+    dev_info(&pdev->dev, "Push button initialized. Current value = %d\n", value);
+    */
+
+
+    /* platform_get_irq could be used if device tree was like this:
+     *
+	push_button {
+	    compatible = "garage,my-push-button";
+
+	    interrupts = <17 IRQ_TYPE_EDGE_FALLING>;
+	    interrupt-parent = <&gpio>;
+	};
+
+	*/
+
+    pb->irq = gpiod_to_irq(pb->button); 
+    if (pb->irq < 0)
+        return pb->irq;
+
+    dev_info(&pdev->dev, "GPIO IRQ = %d\n", pb->irq);
+
+    err = devm_request_threaded_irq(&pdev->dev,
+                                pb->irq,
+                                NULL,
+                                push_button_irq,
+                                IRQF_TRIGGER_FALLING |
+                                IRQF_ONESHOT,
+                                "push_button",
+                                pb->button);
+
+    if (err < 0) {
+	dev_err(&pdev->dev, "Can't get IRQ for push button: %d\n", err);
+	return err;
+    }
+
 
     platform_set_drvdata(pdev, pb);
 

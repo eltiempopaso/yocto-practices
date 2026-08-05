@@ -1,45 +1,49 @@
 /dts-v1/;
 /plugin/;
 
-&{/soc/i2c@7e804000} {
-    #address-cells = <1>;
-    #size-cells = <0>;
+/ {
 
-    nunchuk: nunchuk@52 {
-        compatible = "nintendo,nunchuk";
-        reg = <0x52>;
 
-        variant = "white";
+fragment@0 {
+    target = <&i2c1>;
+
+    __overlay__ {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        nunchuk: nunchuk@52 {
+            compatible = "nintendo,nunchuk";
+            reg = <0x52>;
+            variant = "white";
+        };
     };
 };
 
 
-/ {
-    compatible = "brcm,bcm2837";
 
-    fragment@0 {
+    fragment@1 {
         target = <&gpio>;
 
         __overlay__ {
-            button_pins: button_pins@27 {
+            button_pins: button_pins {
                 brcm,pins = <27>;
-                brcm,function = <0>; /* input */
-                brcm,pull = <2>;     /* pull-up */
+                brcm,function = <0>;
+                brcm,pull = <2>;
             };
         };
     };
 
-    fragment@1 {
+    fragment@2 {
         target-path = "/";
 
         __overlay__ {
-            push_button: push_button@0 {
+            push_button {
                 compatible = "garage,my-push-button";
 
                 pinctrl-names = "default";
                 pinctrl-0 = <&button_pins>;
 
-                button-gpios = <&gpio 27 1>;
+                button-gpios = <&gpio 27 0>;
 
                 status = "okay";
             };
