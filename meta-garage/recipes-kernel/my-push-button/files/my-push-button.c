@@ -15,19 +15,28 @@ struct push_button {
     int irq;
 };
 
+void showContextInfo(int irq, struct push_button *pb) {
+    dev_info(&pb->pdev->dev,"IRQ %d on CPU %u\n", irq, smp_processor_id());
 
-static irqreturn_t push_button_irq(int irq, void *data)
-{
+    dev_info(&pb->pdev->dev,"current=%s pid=%d\n", current->comm, current->pid);
+
+    dev_info(&pb->pdev->dev,"in_interrupt=%d in_irq=%d in_softirq=%d irqs_disabled=%d preempt=%x\n", in_interrupt(), in_irq(), in_softirq(), irqs_disabled(), preempt_count());
+
+    dump_stack();
+}
+
+static irqreturn_t push_button_irq(int irq, void *data) {
     struct push_button *pb = data;
 
     dev_info(&pb->pdev->dev, "Button pressed\n");
+
+    showContextInfo(irq, data);
 
     return IRQ_HANDLED;
 }
 
 
-static int push_button_probe(struct platform_device *pdev)
-{
+static int push_button_probe(struct platform_device *pdev) {
     struct push_button *pb;
     int err;
     //int value;
@@ -92,8 +101,7 @@ static int push_button_probe(struct platform_device *pdev)
     return 0;
 }
 
-static int push_button_remove(struct platform_device *pdev)
-{
+static int push_button_remove(struct platform_device *pdev) {
     dev_info(&pdev->dev, "Push button removed\n");
 
     return 0;
