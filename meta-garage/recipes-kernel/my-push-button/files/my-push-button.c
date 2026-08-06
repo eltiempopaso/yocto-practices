@@ -25,12 +25,21 @@ void showContextInfo(int irq, struct push_button *pb) {
     dump_stack();
 }
 
-static irqreturn_t push_button_irq(int irq, void *data) {
+static irqreturn_t push_button_top(int irq, void *data)
+{
+    struct push_button *pb = data;
+    dev_info(&pb->pdev->dev, "Top half. Button pressed\n");
+
+    showContextInfo(irq, pb);
+    return IRQ_WAKE_THREAD;
+}
+
+static irqreturn_t push_button_irq_thread(int irq, void *data) {
     struct push_button *pb = data;
 
     dev_info(&pb->pdev->dev, "Button pressed\n");
 
-    showContextInfo(irq, data);
+    showContextInfo(irq, pb);
 
     return IRQ_HANDLED;
 }
@@ -83,12 +92,12 @@ static int push_button_probe(struct platform_device *pdev) {
 
     err = devm_request_threaded_irq(&pdev->dev,
                                 pb->irq,
-                                NULL,
-                                push_button_irq,
+				push_button_top, // if NULLPTR no top half is called. only bottom.
+                                push_button_irq_thread,
                                 IRQF_TRIGGER_FALLING |
                                 IRQF_ONESHOT,
                                 "push_button",
-                                pb->button);
+                                pb);
 
     if (err < 0) {
 	dev_err(&pdev->dev, "Can't get IRQ for push button: %d\n", err);
