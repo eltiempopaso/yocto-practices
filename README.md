@@ -148,3 +148,13 @@ devtool build nunchuk
 devtool deploy-target nunchuk root@192.168.0.100
 
 devtool reset nunchuk
+
+
+
+#working with docker
+
+
+
+source poky/oe-init-build-env build-rpi3
+docker run --rm -it   --user $(id -u):$(id -g)   -e HOME=/tmp   -v "$(pwd):/work"   yocto-ubuntu24
+docker build -t yocto-ubuntu24 .
