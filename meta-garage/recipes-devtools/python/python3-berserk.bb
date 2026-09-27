@@ -4,7 +4,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=5e0728c49429334992f78a833bff3e29"
 
 SRC_URI = "git://github.com/rhgrant10/berserk.git;protocol=https;branch=master"
-SRCREV = "${AUTOREV}"
+SRCREV = "621a87161c82da4b28c1e682f43f0bf518687fc9"
 
 S = "${WORKDIR}/git"
 
