@@ -7,7 +7,7 @@ mkdir -p "$HOME/.dockerHome"
 rsync -a "$HOME/.ssh/" "$HOME/.dockerHome/"
 
 echo "==> Checking Docker image..."
-docker build -t "$IMAGE" .
+docker build -t "$IMAGE" ./docker/.
 
 docker run --rm -it \
     --user "$(id -u):$(id -g)" \
