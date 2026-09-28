@@ -32,7 +32,7 @@ case "$PLATFORM" in
     rpi3)
         NFS_ROOT="/local/nfs/rpi3"
 	NFS_NETWORK="192.168.0.0/24"
-        EXPORT_LINE="$NFS_ROOT $NFS_NETWORK(rw,sync,no_subtree_check)"
+        EXPORT_LINE="$NFS_ROOT $NFS_NETWORK(rw,sync,no_subtree_check,no_root_squash)"
         ;;
 
     *)

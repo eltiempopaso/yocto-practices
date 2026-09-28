@@ -26,12 +26,12 @@ fi
 
 # Clean and recreate the temporary directory
 echo "==> Cleaning temporary directory..."
-rm -rf "$TMP_DIR"
-mkdir -p "$TMP_DIR"
+sudo rm -rf "$TMP_DIR"
+sudo mkdir -p "$TMP_DIR"
 
 # Extract the Yocto rootfs
 echo "==> Extracting rootfs..."
-tar xjf "$YOCTO_ROOTFS_TAR" -C "$TMP_DIR"
+sudo tar xjf "$YOCTO_ROOTFS_TAR" -C "$TMP_DIR"
 
 # Create the NFS directory if it does not exist
 echo "==> Creating NFS directory..."
@@ -45,7 +45,7 @@ sudo rsync -aHAX --delete \
 
 # Clean up the temporary directory
 echo "==> Cleaning temporary directory..."
-rm -rf "$TMP_DIR"
+sudo rm -rf "$TMP_DIR"
 
 echo
 echo "==> NFS rootfs updated successfully."
