@@ -14,3 +14,11 @@
 	path = meta-openembedded
 	url = https://git.openembedded.org/meta-openembedded
 	branch = scarthgap
+[submodule "meta-qt6"]
+	path = meta-qt6
+	url = https://code.qt.io/yocto/meta-qt6.git
+	branch = lts-6.8
+[submodule "meta-clang"]
+	path = meta-clang
+	url = https://github.com/kraj/meta-clang.git
+	branch = scarthgap
