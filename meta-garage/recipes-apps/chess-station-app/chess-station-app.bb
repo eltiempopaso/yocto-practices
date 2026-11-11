@@ -11,14 +11,14 @@ S = "${WORKDIR}/git"
 inherit python3native
 
 RDEPENDS:${PN} += "\
-    python3-core \
-    python3-requests \
+    bash \
     python3-berserk \
-    python3-ndjson \
     python3-chess \
+    python3-core \
+    python3-ndjson \
+    python3-requests \
     python3-pyserial \
     python3-pyside6 \
-    bash \
 "
 
 APPDIR = "/opt/chess-station"

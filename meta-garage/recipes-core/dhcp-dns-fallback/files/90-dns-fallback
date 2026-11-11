@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$1" in
+    bound|renew)
+        if ! grep -q '^[[:space:]]*nameserver[[:space:]]' /etc/resolv.conf 2>/dev/null; then
+            printf '%s\n' \
+                'nameserver 1.1.1.1' \
+                'nameserver 8.8.8.8' \
+                > /etc/resolv.conf
+            echo "DHCP supplied no DNS servers; using fallback DNS."
+        fi
+        ;;
+esac
