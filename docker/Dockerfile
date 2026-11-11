@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     gawk \
     gcc \
     git \
+    gosu \
     iputils-ping \
     libacl1 \
     libcrypt-dev \
@@ -63,7 +64,10 @@ RUN sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
 #    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
 #    && chmod 0440 /etc/sudoers.d/${USERNAME}
 
-#USER ${USERNAME}
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 WORKDIR /work
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/bin/bash"]
