@@ -1,0 +1,36 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          wifi-init
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Configure Wi-Fi interface wlan0
+### END INIT INFO
+
+PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+
+case "$1" in
+    start)
+        echo "Configuring Wi-Fi on wlan0..."
+        if [ ! -s /etc/wpa_supplicant.conf ]; then
+            echo "Wi-Fi config /etc/wpa_supplicant.conf is missing or empty." >&2
+            exit 1
+        fi
+        ifup wlan0
+        ;;
+    stop)
+        echo "Stopping Wi-Fi on wlan0..."
+        ifdown wlan0
+        ;;
+    restart|force-reload)
+        "$0" stop || exit $?
+        "$0" start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
