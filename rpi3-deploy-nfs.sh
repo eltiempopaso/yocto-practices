@@ -13,6 +13,7 @@ NFS_DIR="/local/nfs/rpi3"
 YOCTO_ROOTFS_TAR="$SCRIPT_DIR/build-rpi3/tmp/deploy/images/raspberrypi3-64/${IMAGE_NAME}-raspberrypi3-64.rootfs.tar.bz2"
 TMP_DIR="/tmp/yocto-rootfs-rpi3"
 WPA_SUPPLICANT_CONF="/local/nfs/config-rpi3/wpa_supplicant.conf"
+LICHESS_TOKEN_CONF="/local/nfs/config-rpi3/lichess.token"
 
 echo "==> Yocto rootfs:"
 echo "    $YOCTO_ROOTFS_TAR"
@@ -61,6 +62,14 @@ echo "==> Installing wpa_supplicant configuration..."
 sudo install -o root -g root -m 0600 \
     "$WPA_SUPPLICANT_CONF" \
     "$NFS_DIR/etc/wpa_supplicant.conf"
+
+# Install development lichess token to avoid authentication everytime
+echo "==> Installing Lichess token..."
+if [ -f $LICHESS_TOKEN_CONF ]; then
+    sudo install -o root -g root -m 0111 \
+        "$LICHESS_TOKEN_CONF" \
+        "$NFS_DIR/opt/chess-station/lichess.token"
+fi
 
 # Clean up the temporary directory
 echo "==> Cleaning temporary directory..."
