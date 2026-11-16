@@ -17,6 +17,7 @@ case "$1" in
             echo "Wi-Fi config /etc/wpa_supplicant.conf is missing or empty." >&2
             exit 1
         fi
+        iw reg set ES
         ifup wlan0
         ;;
     stop)

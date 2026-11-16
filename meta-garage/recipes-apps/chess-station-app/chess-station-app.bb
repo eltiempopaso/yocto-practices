@@ -8,7 +8,17 @@ SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
-inherit python3native
+inherit python3native useradd
+
+CHESS_HOME = "${localstatedir}/lib/chess-station"
+
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM:${PN} = "--system --create-home \
+    --home-dir ${CHESS_HOME} \
+    --user-group \
+    --groups video,input \
+    --shell /bin/false \
+    chess"
 
 RDEPENDS:${PN} += "\
     bash \
@@ -38,9 +48,13 @@ EOF
     chmod +x ${D}${bindir}/chess-station-app
 }
 
+do_install:append() {
+    install -d -m 0750 -o chess -g chess ${D}${CHESS_HOME}
+}
+
 FILES:${PN} += "\
     ${APPDIR} \
+    ${CHESS_HOME} \
     ${bindir}/chess-station-app\
 "
-
 

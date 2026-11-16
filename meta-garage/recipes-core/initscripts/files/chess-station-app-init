@@ -20,14 +20,28 @@ case "$1" in
         if [ -f lichess.token ]; then
             export CHESSTATION_LICHESS_TOKEN="$(cat lichess.token)"
         fi
+        export HOME="/var/lib/chess-station"
+        RUNDIR="/run/user/chess"
+        install -d -o chess -g chess -m 0700 "$RUNDIR" || exit 1
+        export XDG_RUNTIME_DIR="$RUNDIR"
         export QT_QPA_PLATFORM=eglfs
+        LOGDIR="$HOME/logs"
+        mkdir -p "$LOGDIR" || exit 1
+        chown chess:chess "$LOGDIR" || exit 1
+        chmod 0750 "$LOGDIR" || exit 1
+        LOG_NUMBER=1
+        while [ -e "$LOGDIR/chess-station-app.$LOG_NUMBER.log" ]; do
+            LOG_NUMBER=$((LOG_NUMBER + 1))
+        done
+        LOGFILE="$LOGDIR/chess-station-app.$LOG_NUMBER.log"
         start-stop-daemon \
             --start \
             --background \
             --make-pidfile \
             --pidfile "$PIDFILE" \
-            --exec /usr/bin/python3 \
-            -- main.py || exit $?
+            --chuid chess \
+            --exec /bin/sh \
+            -- -c 'exec /usr/bin/python3 main.py >> "$1" 2>&1' sh "$LOGFILE" || exit $?
         ;;
     stop)
         echo "Stopping chess-station..."
